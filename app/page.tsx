@@ -1,7 +1,8 @@
+'use client';
+
 import { NextSeo } from "next-seo";
-import { useEffect, useState } from "react";
 import { GoogleAnalytics, sendGTMEvent } from '@next/third-parties/google'
-import styles from "./styles.module.scss";
+import styles from "./page.module.scss";
 import JSConfetti from "js-confetti";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -18,6 +19,7 @@ import {
   AiOutlineClose,
   AiOutlineQuestionCircle,
 } from "react-icons/ai";
+import { useEffect, useState } from "react";
 
 const taxNumbers2022 = {
   taxBrackets: [
@@ -43,7 +45,7 @@ const taxNumbers2023 = {
   creditsValue: 235,
 };
 
-export function calculateTax(income: number, credits?: number) {
+function calculateTax(income: number, credits?: number) {
   let taxInfo2022 = calculateTaxForBracket(2022, income, credits);
   let taxInfo2023 = calculateTaxForBracket(2023, income, credits);
   let tax2022 = roundHalf(taxInfo2022.tax);
@@ -128,7 +130,7 @@ function calculateTaxForBracket(
   return { tax: tax, actions: actions };
 }
 
-const ItayTaxApp = () => {
+export default function Home() {
   const [confetti, setConfetti] = useState<any>(undefined);
   useEffect(() => {
     const jsConfetti = new JSConfetti();
@@ -391,5 +393,3 @@ const ItayTaxApp = () => {
     </div>
   );
 };
-
-export default ItayTaxApp;
