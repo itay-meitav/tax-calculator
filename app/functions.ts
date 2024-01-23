@@ -21,17 +21,17 @@ export function parseNumber(number: number): string {
 }
 
 export function parseUpperLimit(number: number) {
-    if (number < TAXES_2023.taxBrackets[0].upperLimit) {
+    if (number < TAXES_2024.taxBrackets[0].upperLimit) {
         return "הראשונה";
-    } else if (number < TAXES_2023.taxBrackets[1].upperLimit) {
+    } else if (number < TAXES_2024.taxBrackets[1].upperLimit) {
         return "השנייה";
-    } else if (number < TAXES_2023.taxBrackets[2].upperLimit) {
+    } else if (number < TAXES_2024.taxBrackets[2].upperLimit) {
         return "השלישית";
-    } else if (number < TAXES_2023.taxBrackets[3].upperLimit) {
+    } else if (number < TAXES_2024.taxBrackets[3].upperLimit) {
         return "הרביעית";
-    } else if (number < TAXES_2023.taxBrackets[4].upperLimit) {
+    } else if (number < TAXES_2024.taxBrackets[4].upperLimit) {
         return "החמישית";
-    } else if (number < TAXES_2023.taxBrackets[5].upperLimit) {
+    } else if (number < TAXES_2024.taxBrackets[5].upperLimit) {
         return "השישית";
     }
     return "האחרונה";
@@ -49,8 +49,7 @@ function roundHalf(num: number): number {
 
 function calculateTaxForBracket(year: number, income: number, credits?: number) {
     let tax = 0;
-    const { taxBrackets, creditsValue } =
-        year === 2023 ? TAXES_2023 : TAXES_2024;
+    const { taxBrackets, creditsValue } = year === 2023 ? TAXES_2023 : TAXES_2024;
     const actions: string[] = [];
     for (let i = 0; i < taxBrackets.length; i++) {
         if (income <= taxBrackets[i].upperLimit) {
