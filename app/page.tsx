@@ -5,6 +5,7 @@ import { sendGAEvent } from '@next/third-parties/google'
 import styles from "./page.module.scss";
 import JSConfetti from "js-confetti";
 import { motion, AnimatePresence } from "framer-motion";
+import CountUp from 'react-countup';
 import { FacebookShareButton, LinkedinShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
 import { AiFillLinkedin, AiFillFacebook, AiOutlineWhatsApp, AiFillTwitterCircle, AiOutlineClose, AiOutlineQuestionCircle } from "react-icons/ai";
 import { useEffect, useRef, useState } from "react";
@@ -13,7 +14,9 @@ import { calculateTax, parseNumber, parseUpperLimit } from "./functions";
 
 export default function Home() {
   const confettiRef = useRef<JSConfetti | null>(null);
-  const [income, setIncome] = useState<any>(null);
+  const resultsRef = useRef<HTMLDivElement>(null);
+
+  const [income, setIncome] = useState<any>("");
   const [isSet, setIsSet] = useState<boolean>(false);
   const [points, setPoints] = useState<any>(2.25);
   const [popup, setPopup] = useState<boolean>(false);
@@ -93,16 +96,16 @@ export default function Home() {
               >
                 <AiOutlineClose size={"24px"} />
               </motion.svg>
-              <motion.p
+              <motion.div
                 initial={{ y: 50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1.5 }}
                 className={styles.modalText}
               >
-                <h3>אז איך ביצענו את החישוב?</h3>
+                <h3>?אז איך ביצענו את החישוב</h3>
                 <br />
                 אתם הזנתם את הסכום <span>{income ? parseNumber(income) : ''}</span> מה שמעמיד
-                אתכם במדרגה <span>{income ? parseUpperLimit(income) : ''}.</span>
+                אתכם במדרגה <b>{income ? parseUpperLimit(income) : ''}</b>
                 <br />
                 <br />
                 <div>
@@ -111,50 +114,54 @@ export default function Home() {
                   ))}
                 </div>
                 <br />
-                תושב ישראל זכאי ל-2.25 נקודות זיכוי וערכה החודשי נכון להיום הוא
-                242 שקלים (2,904 ₪ בשנה).
-                <br />
                 כאמור קיבלנו מס חודשי של{" "}
                 <span>{parseNumber(calculation.monthlyTax2024)}</span> ומס שנתי
-                של <span>{parseNumber(calculation.annualTax2024)}</span>.
-              </motion.p>
+                של <span>{parseNumber(calculation.annualTax2024)}</span>
+              </motion.div>
               <motion.table
                 initial={{ y: 50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1.5, delay: 0.2 }}
                 className={styles.gridTable}
               >
-                <tr>
-                  <th>הכנסה חודשית מצטברת</th>
-                  <th>הכנסה חודשית למדרגה</th>
-                  <th>שיעור המס</th>
-                </tr>
-                {TAXES_2024.taxBrackets.map((x, i) => (
-                  <tr key={i}>
-                    <td>{parseNumber(x.upperLimit)}</td>
-                    <td>
-                      {i !== TAXES_2024.taxBrackets.length - 1
-                        ? parseNumber(
-                          TAXES_2024.taxBrackets[i + 1].upperLimit -
-                          (x.upperLimit + 1)
-                        )
-                        : "כל שקל נוסף"}
-                    </td>
-                    <td>{Math.floor(x.rate * 100) + '%'}</td>
+                <thead>
+                  <tr>
+                    <th>הכנסה חודשית מצטברת</th>
+                    <th>הכנסה חודשית למדרגה</th>
+                    <th>שיעור המס</th>
                   </tr>
-                ))}
-                <tr>
-                  <td>
-                    מעל{" "}
-                    {parseNumber(
-                      TAXES_2024.taxBrackets[
-                        TAXES_2024.taxBrackets.length - 1
-                      ].upperLimit
-                    )}
-                  </td>
-                  <td>כל שקל נוסף</td>
-                  <td>50%</td>
+                </thead>
+                <tr style={{ height: '10px' }}>
+                  <td colSpan={3}></td>
                 </tr>
+                <tbody>
+                  {TAXES_2024.taxBrackets.map((x, i) => (
+                    <tr key={i}>
+                      <td>{parseNumber(x.upperLimit)}</td>
+                      <td>
+                        {i !== TAXES_2024.taxBrackets.length - 1
+                          ? parseNumber(
+                            TAXES_2024.taxBrackets[i + 1].upperLimit -
+                            (x.upperLimit + 1)
+                          )
+                          : "כל שקל נוסף"}
+                      </td>
+                      <td>{Math.floor(x.rate * 100) + '%'}</td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <td>
+                      מעל{" "}
+                      {parseNumber(
+                        TAXES_2024.taxBrackets[
+                          TAXES_2024.taxBrackets.length - 1
+                        ].upperLimit
+                      )}
+                    </td>
+                    <td>כל שקל נוסף</td>
+                    <td>50%</td>
+                  </tr>
+                </tbody>
               </motion.table>
             </motion.div>
           </motion.div>
@@ -179,28 +186,43 @@ export default function Home() {
             setIsSet(true);
             const calculated = calculateTax(income, points);
             setCalculation(calculated);
-            sendGAEvent({ event: 'calculateButtonClicked', income })
+            sendGAEvent({ event: 'calculateButtonClicked', value: income })
+
+            setTimeout(() => {
+              if (resultsRef.current) {
+                resultsRef.current.scrollIntoView({
+                  behavior: 'smooth'
+                });
+              }
+            }, 0);
+
             triggerConfetti();
           }}
         >
-          <input
-            value={income}
-            onChange={(e) => {
-              setIncome(e.currentTarget.value);
-            }}
-            placeholder="משכורת ברוטו חודשית"
-            required
-            type={"number"}
-            min={0}
-          />
-          <input
-            value={points}
-            onChange={(e) => setPoints(e.currentTarget.value)}
-            placeholder="נקודות זיכוי"
-            type="number"
-            step={"0.25"}
-            min={0}
-          />
+          <div className={styles.inputGroup}>
+            <label htmlFor="income">משכורת ברוטו חודשית</label>
+            <input
+              id="income"
+              value={income}
+              onChange={(e) => setIncome(e.currentTarget.value)}
+              placeholder="משכורת ברוטו חודשית"
+              required
+              type="number"
+              min={0}
+            />
+          </div>
+          <div className={styles.inputGroup}>
+            <label htmlFor="points">נקודות זיכוי</label>
+            <input
+              id="points"
+              value={points}
+              onChange={(e) => setPoints(e.currentTarget.value)}
+              placeholder="נקודות זיכוי"
+              type="number"
+              step="0.25"
+              min={0}
+            />
+          </div>
           <motion.button whileHover={{ scale: 1.1 }} type="submit">
             חישוב
           </motion.button>
@@ -208,6 +230,7 @@ export default function Home() {
         <div
           style={{ display: !isSet || popup ? "none" : "" }}
           className={styles.taxInfo}
+          ref={resultsRef}
         >
           <motion.svg
             className={styles.icon}
@@ -219,50 +242,93 @@ export default function Home() {
           <div>
             <h1>הבדלים</h1>
             <p>
-              חודשי: <span>{parseNumber(calculation.monthlyDifference)}</span>
+              חודשי:
+              {" "}
+              <CountUp
+                start={0}
+                end={calculation.monthlyDifference}
+                suffix="₪"
+              />
             </p>
             <p>
-              שנתי: <span>{parseNumber(calculation.annualDifference)}</span>
+              שנתי:
+              {" "}
+              <CountUp
+                start={0}
+                end={calculation.annualDifference}
+                suffix="₪"
+              />
             </p>
           </div>
           <div className={styles.years}>
             <div>
               <h1>2023</h1>
+
               <p>
-                מס בחודש: <span>{parseNumber(calculation.monthlyTax2023)}</span>
+                מס בחודש:
+                {" "}
+                <CountUp
+                  start={0}
+                  end={calculation.monthlyTax2023}
+                  suffix="₪"
+                />
               </p>
               <p>
-                מס בשנה: <span>{parseNumber(calculation.annualTax2023)}</span>
+                מס בשנה:
+                {" "}
+                <CountUp
+                  start={0}
+                  end={calculation.annualTax2023}
+                  suffix="₪"
+                />
               </p>
             </div>
             <div>
               <h1>2024</h1>
               <p>
-                מס בחודש: <span>{parseNumber(calculation.monthlyTax2024)}</span>
+                מס בחודש:
+                {" "}
+                <CountUp
+                  start={0}
+                  end={calculation.monthlyTax2024}
+                  suffix="₪"
+                />
               </p>
               <p>
-                מס בשנה: <span>{parseNumber(calculation.annualTax2024)}</span>
+                מס בשנה:
+                {" "}
+                <CountUp
+                  start={0}
+                  end={calculation.annualTax2024}
+                  suffix="₪"
+                />
               </p>
             </div>
           </div>
         </div>
       </div>
-      <p>
-        הנתונים מבוססים על השינויים שנעשו, ויש להתייחס אליהם בערבון מוגבל בלבד.
-        אין לראות בנתונים המוצגים תחליף להתייעצות עם איש מקצוע (חשב, רואה
-        חשבון).
-      </p>
-      <div className="credit">
-        <span>הוכן על ידי</span>{" "}
-        <a
-          style={{ order: 2 }}
-          target={"_blank"}
-          href="https://www.linkedin.com/in/itay-meitav/"
-        >
-          Itay Meitav
-        </a>{" "}
-        <div>{new Date().getFullYear()} ©</div>
+      <div className={styles.credit}>
+        <p>
+          תושב ישראל זכאי ל-2.25 נקודות זיכוי וערכה החודשי נכון להיום הוא
+          242 שקלים (2,904 ₪ בשנה).
+        </p>
+        <p>
+          הנתונים מבוססים על השינויים שנעשו, ויש להתייחס אליהם בערבון מוגבל בלבד.
+          אין לראות בנתונים המוצגים תחליף להתייעצות עם איש מקצוע (חשב, רואה
+          חשבון).
+        </p>
+        <p>הוכן על ידי{" "}
+          <a
+            style={{ order: 2 }}
+            target={"_blank"}
+            href="https://www.linkedin.com/in/itay-meitav/"
+          >
+            Itay Meitav
+          </a>
+          <br />
+          © {new Date().getFullYear()}
+        </p>
       </div>
-    </div>
+    </div >
   );
 };

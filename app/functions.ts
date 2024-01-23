@@ -51,52 +51,35 @@ function calculateTaxForBracket(year: number, income: number, credits?: number) 
     let tax = 0;
     const { taxBrackets, creditsValue } = year === 2023 ? TAXES_2023 : TAXES_2024;
     const actions: string[] = [];
+
     for (let i = 0; i < taxBrackets.length; i++) {
         if (income <= taxBrackets[i].upperLimit) {
-            let incomeInRange =
-                income - (taxBrackets[i - 1] ? taxBrackets[i - 1].upperLimit + 1 : 0);
+            let incomeInRange = income - (taxBrackets[i - 1] ? taxBrackets[i - 1].upperLimit + 1 : 0);
             tax += incomeInRange * taxBrackets[i].rate;
-            actions.push(
-                `${incomeInRange} X ${taxBrackets[i].rate} = ${roundHalf(
-                    incomeInRange * taxBrackets[i].rate
-                )} `
-            );
+            actions.push(`${incomeInRange} X ${taxBrackets[i].rate} = ${roundHalf(incomeInRange * taxBrackets[i].rate)}`);
             break;
         }
-        tax +=
-            (taxBrackets[i].upperLimit -
-                (taxBrackets[i - 1] ? taxBrackets[i - 1].upperLimit + 1 : 0)) *
-            taxBrackets[i].rate;
-        actions.push(
-            `${taxBrackets[i].upperLimit -
-            (taxBrackets[i - 1] ? taxBrackets[i - 1].upperLimit + 1 : 0)
-            } X ${taxBrackets[i].rate} = ${roundHalf(
-                (taxBrackets[i].upperLimit -
-                    (taxBrackets[i - 1] ? taxBrackets[i - 1].upperLimit + 1 : 0)) *
-                taxBrackets[i].rate
-            )}`
-        );
+
+        tax += (taxBrackets[i].upperLimit - (taxBrackets[i - 1] ? taxBrackets[i - 1].upperLimit + 1 : 0)) * taxBrackets[i].rate;
+        actions.push(`${taxBrackets[i].upperLimit - (taxBrackets[i - 1] ? taxBrackets[i - 1].upperLimit + 1 : 0)}
+         X ${taxBrackets[i].rate} = ${roundHalf((taxBrackets[i].upperLimit - (taxBrackets[i - 1] ?
+            taxBrackets[i - 1].upperLimit + 1 : 0)) * taxBrackets[i].rate)}`);
     }
+
     if (income > taxBrackets[taxBrackets.length - 1].upperLimit + 1) {
         tax += (income - taxBrackets[taxBrackets.length - 1].upperLimit + 1) * 0.5;
-        actions.push(
-            `${income - taxBrackets[taxBrackets.length - 1].upperLimit + 1
-            } X 0.5 = ${roundHalf(tax)}`
-        );
+        actions.push(`${income - taxBrackets[taxBrackets.length - 1].upperLimit + 1} X 0.5 = ${roundHalf(tax)}`);
     }
+
     if (credits && credits > 0) {
-        actions.push(
-            `${credits} X ${TAXES_2023.creditsValue} = ${roundHalf(
-                credits * TAXES_2023.creditsValue
-            )} (נקודות זיכוי)`,
-            `${roundHalf(tax)} - ${roundHalf(
-                credits * TAXES_2023.creditsValue
-            )} = ${roundHalf(tax - credits * creditsValue)}`
-        );
+        actions.push(`${credits} X ${creditsValue} = ${roundHalf(credits * creditsValue)} (נקודות זיכוי)`,
+            `${roundHalf(tax)} - ${roundHalf(credits * creditsValue)} = ${roundHalf(tax - credits * creditsValue) > 0 ? roundHalf(tax - credits * creditsValue) : 0}`);
+
         tax = tax - credits * creditsValue;
+
         if (tax < 0) {
             tax = 0;
         }
     }
-    return { tax: tax, actions: actions };
+    return { tax, actions };
 }
