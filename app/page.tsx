@@ -10,7 +10,9 @@ import { FacebookShareButton, LinkedinShareButton, TwitterShareButton, WhatsappS
 import { AiFillLinkedin, AiFillFacebook, AiOutlineWhatsApp, AiFillTwitterCircle, AiOutlineClose, AiOutlineQuestionCircle } from "react-icons/ai";
 import { useEffect, useRef, useState } from "react";
 import { TAXES_2024 } from './enums'
-import { calculateTax, parseNumber, parseUpperLimit } from "./functions";
+import { calculateTax, google, parseNumber, parseUpperLimit } from "./functions";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   const confettiRef = useRef<JSConfetti | null>(null);
@@ -47,6 +49,9 @@ export default function Home() {
       <motion.div className={styles.shareSection}>
         <motion.p>אהבתם?</motion.p>
         <div className={styles.shareIcons}>
+          <Link target="_blank" style={{ paddingTop: 2 }} href={"https://www.clubhub.co.il"}>
+            <Image alt="clubhub.co.il" width={28} height={25} src={"coupon.svg"} />
+          </Link>
           <FacebookShareButton
             title="מחשבון הפרשי מס 2023 - 2024"
             quote="בדקו עכשיו כמה מס תחסכו השנה בהתאם להורדת המיסים בחוק"
@@ -186,7 +191,8 @@ export default function Home() {
             setIsSet(true);
             const calculated = calculateTax(income, points);
             setCalculation(calculated);
-            sendGAEvent({ event: 'calculateButtonClicked', value: income })
+
+            google.event({ action: 'calculate', data: { income } });
 
             setTimeout(() => {
               if (resultsRef.current) {

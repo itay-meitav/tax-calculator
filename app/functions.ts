@@ -83,3 +83,11 @@ function calculateTaxForBracket(year: number, income: number, credits?: number) 
     }
     return { tax, actions };
 }
+
+export const google = {
+    event: async ({ action, data }: { action: string, data: object }) => {
+        if (typeof window !== 'undefined') {
+            window.gtag('event', action, { ...data });
+        }
+    },
+};
