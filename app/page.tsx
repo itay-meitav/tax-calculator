@@ -14,6 +14,16 @@ import { calculateTax, google, parseNumber, parseUpperLimit } from "./functions"
 import Link from "next/link";
 import Image from "next/image";
 
+const initialCalculationState = {
+  monthlyTax2023: 0,
+  annualTax2023: 0,
+  monthlyTax2024: 0,
+  annualTax2024: 0,
+  monthlyDifference: 0,
+  annualDifference: 0,
+  actions: [] as string[],
+}
+
 export default function Home() {
   const confettiRef = useRef<JSConfetti | null>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -22,15 +32,8 @@ export default function Home() {
   const [isSet, setIsSet] = useState<boolean>(false);
   const [points, setPoints] = useState<any>(2.25);
   const [popup, setPopup] = useState<boolean>(false);
-  const [calculation, setCalculation] = useState({
-    monthlyTax2023: 0,
-    annualTax2023: 0,
-    monthlyTax2024: 0,
-    annualTax2024: 0,
-    monthlyDifference: 0,
-    annualDifference: 0,
-    actions: [] as string[],
-  });
+  const [calculation, setCalculation] = useState(initialCalculationState);
+  const [prevCalculation, setPrevCalculation] = useState(initialCalculationState);
 
   useEffect(() => {
     confettiRef.current = new JSConfetti();
@@ -188,11 +191,16 @@ export default function Home() {
           className={styles.formSection}
           onSubmit={(e) => {
             e.preventDefault();
-            setIsSet(true);
+
+            setPrevCalculation(calculation);
             const calculated = calculateTax(income, points);
             setCalculation(calculated);
 
-            google.event({ action: 'calculate', data: { income } });
+            if (calculation.monthlyTax2024! == prevCalculation.monthlyTax2024) {
+              google.event({ action: 'calculate', data: { income } });
+            }
+
+            setIsSet(true);
 
             setTimeout(() => {
               if (resultsRef.current) {
@@ -251,7 +259,7 @@ export default function Home() {
               חודשי:
               {" "}
               <CountUp
-                start={0}
+                start={prevCalculation.monthlyDifference}
                 end={calculation.monthlyDifference}
                 suffix="₪"
               />
@@ -260,7 +268,7 @@ export default function Home() {
               שנתי:
               {" "}
               <CountUp
-                start={0}
+                start={prevCalculation.annualDifference}
                 end={calculation.annualDifference}
                 suffix="₪"
               />
@@ -274,7 +282,7 @@ export default function Home() {
                 מס בחודש:
                 {" "}
                 <CountUp
-                  start={0}
+                  start={prevCalculation.monthlyTax2023}
                   end={calculation.monthlyTax2023}
                   suffix="₪"
                 />
@@ -283,7 +291,7 @@ export default function Home() {
                 מס בשנה:
                 {" "}
                 <CountUp
-                  start={0}
+                  start={prevCalculation.annualTax2023}
                   end={calculation.annualTax2023}
                   suffix="₪"
                 />
@@ -295,7 +303,7 @@ export default function Home() {
                 מס בחודש:
                 {" "}
                 <CountUp
-                  start={0}
+                  start={prevCalculation.monthlyTax2024}
                   end={calculation.monthlyTax2024}
                   suffix="₪"
                 />
@@ -304,7 +312,7 @@ export default function Home() {
                 מס בשנה:
                 {" "}
                 <CountUp
-                  start={0}
+                  start={prevCalculation.annualTax2024}
                   end={calculation.annualTax2024}
                   suffix="₪"
                 />
@@ -313,10 +321,13 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className={styles.credit}>
+      <div style={{ paddingTop: 50 }} className={styles.credit}>
         <p>
           תושב ישראל זכאי ל-2.25 נקודות זיכוי וערכה החודשי נכון להיום הוא
           242 שקלים (2,904 ₪ בשנה).
+        </p>
+        <p>
+          עלולה להופיע סטיה במספר שקלים בגלל טכניקת עיגול מספרים.
         </p>
         <p>
           הנתונים מבוססים על השינויים שנעשו, ויש להתייחס אליהם בערבון מוגבל בלבד.
