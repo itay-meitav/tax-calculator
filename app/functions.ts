@@ -3,8 +3,8 @@ import { TAXES_2023, TAXES_2024 } from "./enums";
 export function calculateTax(income: number, credits?: number) {
     let taxInfo2023 = calculateTaxForBracket(2023, income, credits);
     let taxInfo2024 = calculateTaxForBracket(2024, income, credits);
-    let tax2023 = roundHalf(taxInfo2023.tax);
-    let tax2024 = roundHalf(taxInfo2024.tax);
+    let tax2023 = Math.ceil(taxInfo2023.tax);
+    let tax2024 = Math.ceil(taxInfo2024.tax);
     return {
         monthlyTax2023: tax2023,
         annualTax2023: tax2023 * 12,
@@ -37,16 +37,6 @@ export function parseUpperLimit(number: number) {
     return "האחרונה";
 }
 
-function roundHalf(num: number): number {
-    if (num % 1 >= 0.5) {
-        return Math.ceil(num);
-    } else if (num % 1 == 0.5) {
-        return num;
-    } else {
-        return Math.floor(num);
-    }
-}
-
 function calculateTaxForBracket(year: number, income: number, credits?: number) {
     let tax = 0;
     const { taxBrackets, creditsValue } = year === 2023 ? TAXES_2023 : TAXES_2024;
@@ -56,24 +46,24 @@ function calculateTaxForBracket(year: number, income: number, credits?: number) 
         if (income <= taxBrackets[i].upperLimit) {
             let incomeInRange = income - (taxBrackets[i - 1] ? taxBrackets[i - 1].upperLimit + 1 : 0);
             tax += incomeInRange * taxBrackets[i].rate;
-            actions.push(`${incomeInRange} X ${taxBrackets[i].rate} = ${roundHalf(incomeInRange * taxBrackets[i].rate)}`);
+            actions.push(`${incomeInRange} X ${taxBrackets[i].rate} = ${Math.ceil(incomeInRange * taxBrackets[i].rate)}`);
             break;
         }
 
         tax += (taxBrackets[i].upperLimit - (taxBrackets[i - 1] ? taxBrackets[i - 1].upperLimit + 1 : 0)) * taxBrackets[i].rate;
         actions.push(`${taxBrackets[i].upperLimit - (taxBrackets[i - 1] ? taxBrackets[i - 1].upperLimit + 1 : 0)}
-         X ${taxBrackets[i].rate} = ${roundHalf((taxBrackets[i].upperLimit - (taxBrackets[i - 1] ?
+         X ${taxBrackets[i].rate} = ${Math.ceil((taxBrackets[i].upperLimit - (taxBrackets[i - 1] ?
             taxBrackets[i - 1].upperLimit + 1 : 0)) * taxBrackets[i].rate)}`);
     }
 
     if (income > taxBrackets[taxBrackets.length - 1].upperLimit + 1) {
         tax += (income - taxBrackets[taxBrackets.length - 1].upperLimit + 1) * 0.5;
-        actions.push(`${income - taxBrackets[taxBrackets.length - 1].upperLimit + 1} X 0.5 = ${roundHalf(tax)}`);
+        actions.push(`${income - taxBrackets[taxBrackets.length - 1].upperLimit + 1} X 0.5 = ${Math.ceil(tax)}`);
     }
 
     if (credits && credits > 0) {
-        actions.push(`${credits} X ${creditsValue} = ${roundHalf(credits * creditsValue)} (נקודות זיכוי)`,
-            `${roundHalf(tax)} - ${roundHalf(credits * creditsValue)} = ${roundHalf(tax - credits * creditsValue) > 0 ? roundHalf(tax - credits * creditsValue) : 0}`);
+        actions.push(`${credits} X ${creditsValue} = ${Math.ceil(credits * creditsValue)} (נקודות זיכוי)`,
+            `${Math.ceil(tax)} - ${Math.ceil(credits * creditsValue)} = ${Math.ceil(tax - credits * creditsValue) > 0 ? Math.ceil(tax - credits * creditsValue) : 0}`);
 
         tax = tax - credits * creditsValue;
 
