@@ -52,7 +52,7 @@ export default function Home() {
       <motion.div className={styles.shareSection}>
         <motion.p>אהבתם?</motion.p>
         <div className={styles.shareIcons}>
-          <Link target="_blank" style={{ paddingTop: 2 }} href={"https://www.clubhub.co.il"}>
+          <Link target="_blank" style={{ paddingTop: 2 }} href={"https://www.clubhub.co.il?ref=taxCalc"}>
             <Image alt="clubhub.co.il" width={28} height={25} src={"coupon.svg"} />
           </Link>
           <FacebookShareButton
