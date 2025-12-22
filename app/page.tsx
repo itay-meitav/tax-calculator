@@ -1,6 +1,5 @@
 'use client';
 
-import { NextSeo, SocialProfileJsonLd } from "next-seo";
 import { sendGAEvent } from '@next/third-parties/google'
 import styles from "./page.module.scss";
 import JSConfetti from "js-confetti";
@@ -56,8 +55,7 @@ export default function Home() {
             <Image alt="clubhub.co.il" width={28} height={25} src={"coupon.svg"} />
           </Link>
           <FacebookShareButton
-            title="מחשבון הפרשי מס 2023 - 2024"
-            quote="בדקו עכשיו כמה מס תחסכו השנה בהתאם להורדת המיסים בחוק"
+            hashtag="#מחשבון_מס"
             url="http://tax-calculator.us.to/"
           >
             <AiFillFacebook size={"24px"} />
@@ -139,10 +137,10 @@ export default function Home() {
                     <th>שיעור המס</th>
                   </tr>
                 </thead>
-                <tr style={{ height: '10px' }}>
-                  <td colSpan={3}></td>
-                </tr>
                 <tbody>
+                  <tr style={{ height: '10px' }}>
+                    <td colSpan={3}></td>
+                  </tr>
                   {TAXES_2024.taxBrackets.map((x, i) => (
                     <tr key={i}>
                       <td>{parseNumber(x.upperLimit)}</td>
@@ -176,16 +174,6 @@ export default function Home() {
         )}
       </AnimatePresence>
       <div className={styles.main}>
-        <NextSeo
-          title="מחשבון הפרשי מס 2023 - 2024"
-          description="השתמשו במחשבון הפרשי המס לשנים 2023-2024 לחישוב מס מדויק ועדכני. אידיאלי לחישוב מס הכנסה, הבנת מדרגות המס החדשות וניצול של נקודות זיכוי ממס הכנסה."
-        />
-        <SocialProfileJsonLd
-          type="Person"
-          name="Itay Meitav"
-          url="https://github.com/itay-meitav/"
-          sameAs={['https://www.linkedin.com/in/itay-meitav/']}
-        />
         <h1>מחשבון מס</h1>
         <form
           className={styles.formSection}
