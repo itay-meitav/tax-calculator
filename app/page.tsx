@@ -111,6 +111,9 @@ export default function Home() {
                     הזנתם את הסכום <span className={styles.highlight}>{income ? parseNumber(income) : ''}</span> מה שמעמיד
                     אתכם במדרגה <span className={styles.highlight}>{income ? parseUpperLimit(income) : ''}</span>
                   </p>
+                  <p className={styles.taxNote}>
+                    💡 שימו לב: לא משלמים את שיעור המס הגבוה על כל ה־{parseNumber(income)}. כל מדרגה ממוסה בנפרד לפי השיעור שלה.
+                  </p>
                   <div className={styles.actionsList}>
                     {calculation.actions.map((x, i) => (
                       <p key={i}>{x}</p>
@@ -132,8 +135,34 @@ export default function Home() {
                 <table className={styles.gridTable}>
                   <thead>
                     <tr>
-                      <th>הכנסה חודשית מצטברת</th>
-                      <th>הכנסה חודשית למדרגה</th>
+                      <th>
+                        <span className={styles.headerWithTooltip}>
+                          <span className={styles.tooltip}>
+                            <AiOutlineQuestionCircle size={14} />
+                            <span className={styles.tooltipText}>
+                              הסכום המצטבר של ההכנסה החודשית עד סוף אותה מדרגה.
+                              זהו לא סכום שממוסים עליו בבת אחת, אלא גבול עליון מצטבר.
+                            </span>
+                          </span>
+                          הכנסה חודשית מצטברת
+                        </span>
+                      </th>
+                      <th>
+                        <span className={styles.headerWithTooltip}>
+                          <span className={styles.tooltip}>
+                            <AiOutlineQuestionCircle size={14} />
+                            <span className={styles.tooltipText}>
+                              טווח ההכנסה החודשית שעליו חל אותו שיעור מס.
+                              <br /><br />
+                              לדוגמה:<br />
+                              עד 3,049 ₪ → מס 10%<br />
+                              בין 3,050–6,089 ₪ → מס 14%<br />
+                              וכן הלאה.
+                            </span>
+                          </span>
+                          הכנסה חודשית למדרגה
+                        </span>
+                      </th>
                       <th>שיעור המס</th>
                     </tr>
                   </thead>
@@ -792,7 +821,7 @@ export default function Home() {
                   <h4>הבדלים עיקריים</h4>
                   <ul className={styles.differencesList}>
                     <li>
-                      <strong>2023 → 2024:</strong> עדכון מדרגות מס ושווי נקודת זיכוי (235 ₪ → 242 ₪)
+                      <strong>2023 ➡️ 2024:</strong> עדכון מדרגות מס ושווי נקודת זיכוי (235 ₪ ➡️ 242 ₪)
                     </li>
                     <li>
                       <strong>2024 = 2025:</strong> אין שינוי במדרגות או בשווי נקודת זיכוי
