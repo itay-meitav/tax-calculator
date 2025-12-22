@@ -29,8 +29,8 @@ export async function POST(request: NextRequest) {
     }
 
     const colors: Record<string, number> = {
-      bug: 0xff4444,      // Red
-      suggestion: 0x44ff44, // Green
+      bug: 0xff4444,
+      suggestion: 0x44ff44,
       question: 0x4444ff,
       other: 0xffaa44,
     };

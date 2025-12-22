@@ -44,10 +44,11 @@ export const metadata: Metadata = {
     description: "השוו את המס שלכם בין השנים וגלו כמה תשלמו פחות. כולל נקודות זיכוי למשרתי מילואים לוחמים.",
     images: [
       {
-        url: "/android-chrome-512x512.png",
-        width: 512,
-        height: 512,
-        alt: "מחשבון הפרשי מס 2023-2026",
+        url: "/og-image.png",
+        width: 1600,
+        height: 838,
+        alt: "מחשבון מס עם נקודות זיכוי למשרתי מילואים",
+        type: "image/png",
       },
     ],
   },
@@ -55,7 +56,14 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "מחשבון הפרשי מס 2023 - 2026 | זיכוי מילואים לוחם",
     description: "השוו את המס שלכם בין השנים וגלו כמה תשלמו פחות",
-    images: ["/android-chrome-512x512.png"],
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1600,
+        height: 838,
+        alt: "מחשבון מס עם נקודות זיכוי למשרתי מילואים",
+      },
+    ],
     creator: "@itaymeitav",
   },
   icons: {
