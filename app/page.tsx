@@ -208,7 +208,8 @@ export default function Home() {
             setTimeout(() => {
               if (resultsRef.current) {
                 resultsRef.current.scrollIntoView({
-                  behavior: 'smooth'
+                  behavior: 'smooth',
+                  block: 'center'
                 });
               }
             }, 0);
@@ -333,7 +334,7 @@ export default function Home() {
               </motion.button>
 
               <div className={styles.differenceSection}>
-                <h2>ההפרש שלכם</h2>
+                <h2>החיסכון שלכם לעומת 2023</h2>
                 <div className={styles.differenceCards}>
                   <div className={styles.differenceCard}>
                     <span className={styles.differenceLabel}>חודשי</span>
@@ -463,6 +464,9 @@ export default function Home() {
                       נקודות מילואים: {calculation.reservistPoints} נק׳ ({(calculation.reservistPoints * 242 * 12).toLocaleString('he-IL')} ₪)
                     </div>
                   )}
+                  <div className={styles.year2026Disclaimer}>
+                    המידע על 2026 עדיין מחושב לפי מדרגות המס ושווי נקודות הזיכוי של 2024 ו-2025 - נבצע עדכון למחשבון במידה ותתבצע חקיקה חדשה.
+                  </div>
                 </motion.div>
               </div>
             </motion.div>

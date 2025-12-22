@@ -692,6 +692,16 @@ $text-light: #5b8282;
   font-weight: 500;
 }
 
+.year2026Disclaimer {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.4;
+  text-align: center;
+}
+
 .modalOverlay {
   position: fixed;
   inset: 0;
