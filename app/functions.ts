@@ -1,18 +1,31 @@
-import { TAXES_2023, TAXES_2024 } from "./enums";
+import { TAXES_2023, TAXES_2025, calculateReservistPoints } from "./enums";
 
-export function calculateTax(income: number, credits?: number) {
+export function calculateTax(income: number, credits?: number, reservistDays?: number) {
+    const reservistPoints = reservistDays ? calculateReservistPoints(reservistDays) : 0;
+    
     let taxInfo2023 = calculateTaxForBracket(2023, income, credits);
-    let taxInfo2024 = calculateTaxForBracket(2024, income, credits);
+    
+    let taxInfo2025 = calculateTaxForBracket(2025, income, credits);
+    
+    const totalCredits2026 = (credits || 0) + reservistPoints;
+    let taxInfo2026 = calculateTaxForBracket(2025, income, totalCredits2026);
+    
     let tax2023 = Math.ceil(taxInfo2023.tax);
-    let tax2024 = Math.ceil(taxInfo2024.tax);
+    let tax2025 = Math.ceil(taxInfo2025.tax);
+    let tax2026 = Math.ceil(taxInfo2026.tax);
+    
     return {
         monthlyTax2023: tax2023,
         annualTax2023: tax2023 * 12,
-        monthlyTax2024: tax2024,
-        annualTax2024: tax2024 * 12,
-        monthlyDifference: tax2023 - tax2024,
-        annualDifference: tax2023 * 12 - tax2024 * 12,
-        actions: taxInfo2024.actions,
+        monthlyTax2025: tax2025,
+        annualTax2025: tax2025 * 12,
+        monthlyTax2026: tax2026,
+        annualTax2026: tax2026 * 12,
+        monthlyDifference: tax2023 - tax2025,
+        annualDifference: tax2023 * 12 - tax2025 * 12,
+        actions: taxInfo2025.actions,
+        reservistPoints,
+        reservistDays: reservistDays || 0,
     };
 }
 
@@ -21,17 +34,17 @@ export function parseNumber(number: number): string {
 }
 
 export function parseUpperLimit(number: number) {
-    if (number < TAXES_2024.taxBrackets[0].upperLimit) {
+    if (number < TAXES_2025.taxBrackets[0].upperLimit) {
         return "הראשונה";
-    } else if (number < TAXES_2024.taxBrackets[1].upperLimit) {
+    } else if (number < TAXES_2025.taxBrackets[1].upperLimit) {
         return "השנייה";
-    } else if (number < TAXES_2024.taxBrackets[2].upperLimit) {
+    } else if (number < TAXES_2025.taxBrackets[2].upperLimit) {
         return "השלישית";
-    } else if (number < TAXES_2024.taxBrackets[3].upperLimit) {
+    } else if (number < TAXES_2025.taxBrackets[3].upperLimit) {
         return "הרביעית";
-    } else if (number < TAXES_2024.taxBrackets[4].upperLimit) {
+    } else if (number < TAXES_2025.taxBrackets[4].upperLimit) {
         return "החמישית";
-    } else if (number < TAXES_2024.taxBrackets[5].upperLimit) {
+    } else if (number < TAXES_2025.taxBrackets[5].upperLimit) {
         return "השישית";
     }
     return "האחרונה";
@@ -39,7 +52,7 @@ export function parseUpperLimit(number: number) {
 
 function calculateTaxForBracket(year: number, income: number, credits?: number) {
     let tax = 0;
-    const { taxBrackets, creditsValue } = year === 2023 ? TAXES_2023 : TAXES_2024;
+    const { taxBrackets, creditsValue } = year === 2023 ? TAXES_2023 : TAXES_2025;
     const actions: string[] = [];
 
     for (let i = 0; i < taxBrackets.length; i++) {
@@ -62,7 +75,7 @@ function calculateTaxForBracket(year: number, income: number, credits?: number) 
     }
 
     if (credits && credits > 0) {
-        actions.push(`${credits} X ${creditsValue} = ${Math.ceil(credits * creditsValue)} (נקודות זיכוי)`,
+        actions.push(`${credits} X ${creditsValue} = ${Math.ceil(credits * creditsValue)} (נק' זיכוי)`,
             `${Math.ceil(tax)} - ${Math.ceil(credits * creditsValue)} = ${Math.ceil(tax - credits * creditsValue) > 0 ? Math.ceil(tax - credits * creditsValue) : 0}`);
 
         tax = tax - credits * creditsValue;

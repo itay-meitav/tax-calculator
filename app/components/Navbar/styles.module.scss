@@ -1,0 +1,129 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  
+  height: 64px;
+  padding: 0 24px;
+  
+  border-bottom: 1px solid rgba(13, 148, 136, 0.1);
+
+  @media (max-width: 768px) {
+    height: 56px;
+    padding: 0 16px;
+  }
+
+  @media (max-width: 480px) {
+    height: 52px;
+    padding: 0 12px;
+  }
+}
+
+.navbarContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+  @media (max-width: 768px) {
+    gap: 0.35rem;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 0.2rem;
+  }
+}
+
+.themeSwitcherWrapper {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid rgba(13, 148, 136, 0.2);
+  border-radius: 8px;
+  color: #134e4a;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: rgba(13, 148, 136, 0.08);
+    border-color: rgba(13, 148, 136, 0.4);
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.8rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.7rem;
+    border-radius: 6px;
+  }
+}
+
+.navLinkIcon {
+  font-size: 0.9rem;
+  
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
+}
+
+:global(.theme-dark) {
+  .navbar {
+    background: linear-gradient(
+      180deg,
+      rgba(15, 23, 22, 0.85) 0%,
+      rgba(15, 23, 22, 0.6) 100%
+    );
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .navLink {
+    color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.15);
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
+
