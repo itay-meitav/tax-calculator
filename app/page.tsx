@@ -391,12 +391,7 @@ export default function Home() {
               </div>
 
               <div className={styles.yearsComparison}>
-                <motion.div 
-                  className={styles.yearCard}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2 }}
-                >
+                <div className={styles.yearCard}>
                   <h3>2023</h3>
                   <div className={styles.yearStats}>
                     <div className={styles.stat}>
@@ -422,14 +417,9 @@ export default function Home() {
                       </span>
                     </div>
                   </div>
-                </motion.div>
+                </div>
 
-                <motion.div 
-                  className={`${styles.yearCard} ${styles.yearCardHighlight}`}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 }}
-                >
+                <div className={`${styles.yearCard} ${styles.yearCardHighlight}`}>
                   <h3>2024-2025</h3>
                   <div className={styles.yearStats}>
                     <div className={styles.stat}>
@@ -455,14 +445,9 @@ export default function Home() {
                       </span>
                     </div>
                   </div>
-                </motion.div>
+                </div>
 
-                <motion.div 
-                  className={styles.yearCard}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4 }}
-                >
+                <div className={styles.yearCard}>
                   <h3>2026</h3>
                   <div className={styles.yearStats}>
                     <div className={styles.stat}>
@@ -496,7 +481,7 @@ export default function Home() {
                   <div className={styles.year2026Disclaimer}>
                     המידע על 2026 עדיין מחושב לפי מדרגות המס ושווי נקודות הזיכוי של 2024 ו-2025 - נבצע עדכון למחשבון במידה ותתבצע חקיקה חדשה.
                   </div>
-                </motion.div>
+                </div>
               </div>
             </motion.div>
           )}
