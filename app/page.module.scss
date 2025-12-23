@@ -113,6 +113,11 @@ $text-light: #5b8282;
   font-weight: 600;
   letter-spacing: 0.02em;
   box-shadow: 0 4px 20px $accent-glow, inset 0 1px 0 rgba(255,255,255,0.2);
+  
+  @media (max-width: 480px) {
+    padding: 0.45rem 1rem;
+    font-size: 0.8rem;
+  }
 }
 
 .heroSection h1 {
@@ -121,6 +126,10 @@ $text-light: #5b8282;
   color: $text-dark;
   margin: 0;
   letter-spacing: -0.03em;
+  
+  @media (max-width: 480px) {
+    font-size: 1.75rem;
+  }
 }
 
 .subtitle {
@@ -128,6 +137,10 @@ $text-light: #5b8282;
   color: $text-light;
   margin: 0;
   font-weight: 400;
+  
+  @media (max-width: 480px) {
+    font-size: 0.85rem;
+  }
 }
 
 .formSection {
@@ -718,11 +731,11 @@ $text-light: #5b8282;
   gap: 2rem;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.2);
   direction: rtl;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   
   &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+    display: none;
   }
 
   @media (max-width: 768px) {
@@ -1198,6 +1211,12 @@ $text-light: #5b8282;
       color: white;
       border: none;
       white-space: nowrap;
+      
+      @media (max-width: 480px) {
+        padding: 0.6rem 0.35rem;
+        font-size: 0.7rem;
+        white-space: normal;
+      }
     }
   }
   
@@ -1219,11 +1238,22 @@ $text-light: #5b8282;
       color: $text-medium;
       border-bottom: 1px solid rgba(13, 148, 136, 0.1);
       white-space: nowrap;
+      
+      @media (max-width: 480px) {
+        padding: 0.5rem 0.35rem;
+        font-size: 0.75rem;
+        white-space: normal;
+      }
     }
     
     tr:last-child td {
       border-bottom: none;
     }
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.75rem;
+    border-radius: 8px;
   }
 }
 

@@ -31,6 +31,28 @@
   &:hover svg {
     transform: rotate(15deg);
   }
+  
+  @media (max-width: 768px) {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
 }
 
 :global(.theme-dark) {
