@@ -717,6 +717,13 @@ $text-light: #5b8282;
   display: flex;
   gap: 2rem;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.2);
+  direction: rtl;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 
   @media (max-width: 768px) {
     flex-direction: column;
