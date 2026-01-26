@@ -500,12 +500,12 @@ export default function Home() {
             <AnimatedContent distance={40} delay={0.1} style={{ flex: 1, display: 'flex' }}>
               <div className={styles.infoCard}>
                 <div className={styles.cardHeader}>
-                  <span className={styles.newBadge}>חדש!</span>
-                  <h3>תיקון 283 לפקודת מס הכנסה</h3>
+                  <span className={styles.newBadge}>בתוקף!</span>
+                  <h3>החלטת ממשלה מספר 3004</h3>
                 </div>
                 <p>
-                  החל מינואר 2026 נכנס לתוקף תיקון 283 - נקודות זיכוי לחיילי מילואים לוחמים 
-                  בהתאם לימי השירות בשנה הקודמת. המקסימום שאפשר לקבל הוא 4 נקודות 
+                  החל מינואר 2026 נכנסה לתוקף הטבת מס חדשה - נקודות זיכוי לחיילי מילואים <strong>לוחמים</strong> שביצעו מעל 30 ימי שירות בשנת 2025 בצו שגרה או צו 8.
+                  המקסימום שאפשר לקבל הוא 4 נקודות 
                   בשווי <strong>11,616 ₪</strong> בשנה (<strong>968 ₪</strong> תשלום פחות מס בחודש).
                 </p>
               </div>
@@ -517,19 +517,19 @@ export default function Home() {
                 <ul className={styles.eligibilityList}>
                   <li>
                     <span className={styles.bulletIcon}>•</span>
-                    משרתי מילואים <strong>כלוחם</strong> (מערך לוחם)
+                    משרתי מילואים <strong>לוחמים</strong> (״מערך מזכה״ בלשון צה״ל)
                   </li>
                   <li>
                     <span className={styles.bulletIcon}>•</span>
-                    נדרש אישור מצה״ל על ימי שירות מזכים
+                    ביצעו <strong>לפחות 30 ימי שירות</strong> בשנת 2025
                   </li>
                   <li>
                     <span className={styles.bulletIcon}>•</span>
-                    רק שירות <strong>בייעוד קדמי</strong> נחשב כמזכה
+                    ההטבה חלה על <strong>שכירים ועצמאיים</strong> כאחד
                   </li>
                   <li>
                     <span className={styles.bulletIcon}>•</span>
-                    יחידות הגמ״ר מוחרגות מההטבה
+                    נפצעתם בשירות וסופחתם לר״מ 2? התקופה נחשבת כימי שמ״פ מזכים
                   </li>
                 </ul>
               </div>
@@ -579,21 +579,28 @@ export default function Home() {
                     <span className={styles.stepNumber}>1</span>
                     <div>
                       <strong>שכירים</strong>
-                      <p>למלא טופס 101 (חלק ח׳, סעיף 16) בתחילת שנת המס + לצרף אישור מצה״ל</p>
+                      <p>לסמן בטופס 101 כי מדובר במשרת מילואים לוחם + להגיש למעסיק את טופס ״נקודות זיכוי לשנת 2025״</p>
                     </div>
                   </div>
                   <div className={styles.step}>
                     <span className={styles.stepNumber}>2</span>
                     <div>
                       <strong>עובדים ביותר ממקום אחד</strong>
-                      <p>תיאום מס במערכת המקוונת לתיאומי מס</p>
+                      <p>נדרש <a href="https://www.gov.il/he/service/tax-coordination-online" target="_blank" rel="noopener noreferrer">תיאום מס במערכת המקוונת</a></p>
                     </div>
                   </div>
                   <div className={styles.step}>
                     <span className={styles.stepNumber}>3</span>
                     <div>
                       <strong>עצמאים</strong>
-                      <p>לצרף את האישור במסגרת הגשת הדוח השנתי</p>
+                      <p>מימוש במסגרת הדוח השנתי למס הכנסה</p>
+                    </div>
+                  </div>
+                  <div className={styles.step}>
+                    <span className={styles.stepNumber}>4</span>
+                    <div>
+                      <strong>מימוש בדיעבד</strong>
+                      <p>לא הספקתם לממש? ניתן להגיש בקשה להחזר מס בדיעבד</p>
                     </div>
                   </div>
                 </div>
@@ -604,13 +611,13 @@ export default function Home() {
               <div className={styles.howToCard}>
                 <h3>איך להנפיק אישור?</h3>
                 <div className={styles.certificateSteps}>
-                  <p>יש להיכנס ל<a href="https://www.miluim.idf.il/personalzone/milforms-lobby" target="_blank" rel="noopener noreferrer">אתר המילואים</a> ואז:</p>
+                  <p>יש להיכנס ל<a href="https://go.idf.il/n0d8d9w4u3" target="_blank" rel="noopener noreferrer">אזור האישי באתר המילואים</a>:</p>
                   <ol>
-                    <li>לאזור ״האישורים שלי״</li>
-                    <li>להנפיק ״<a href="https://www.miluim.idf.il/personalzone/milforms-lobby" target="_blank" rel="noopener noreferrer">טופס אישור מילואים מזכה</a>״</li>
+                    <li>לחפש את הקובץ ״<strong>נקודות זיכוי לשנת 2025</strong>״</li>
+                    <li>להוריד ולהעביר למעסיק</li>
                   </ol>
                   <p className={styles.note}>
-                    <strong>שימו לב:</strong> בטופס לא כתוב שאתם במערך לוחם (אבטחת מידע) - הטופס עדיין עושה את העבודה.
+                    <strong>שימו לב:</strong> טופס ״שירות מזכה״ הישן <u>אינו רלוונטי</u> עבור נקודות זיכוי במס! יש להשתמש רק בטופס החדש.
                   </p>
                 </div>
               </div>
@@ -621,8 +628,18 @@ export default function Home() {
             <div className={styles.warningBanner}>
               <span className={styles.warningEmoji}>⚠️</span>
               <div>
-                <strong>לא מילאתם טופס 101?</strong>
-                <p>המעסיק לא יחשב לכם נקודות זיכוי, ואתם עלולים לשלם מס מיותר ולהסתבך בהחזר מס. אל תסמכו על המעסיק שיבדוק עבורכם את הזכאות!</p>
+                <strong>חשוב לוודא שהנתונים מדויקים!</strong>
+                <p>מספר ימי השירות שמופיע באישור עשוי להתעדכן. אם יש פער בין האישור לשירות בפועל - <strong>המתינו לעדכון לפני שתגישו למעסיק</strong> מימוש על בסיס נתון שגוי עלול לגרור דרישת החזר או חוב מול רשות המסים.</p>
+              </div>
+            </div>
+          </AnimatedContent>
+
+          <AnimatedContent distance={30} delay={0.15}>
+            <div className={styles.warningBanner}>
+              <span className={styles.warningEmoji}>💡</span>
+              <div>
+                <strong>לא עובדים כרגע אבל מקבלים תגמולי מילואים מביטוח לאומי?</strong>
+                <p>אפשר לבצע תיאום מס: סמנו הכנסה ממשכורת, תיק ניכויים <strong>941774770</strong> ביטוח לאומי כמעסיק משני (״אין לי מעסיק ראשי״). <strong>חשוב:</strong> יש להזין סכום שיביא ל-0% מס - רק כך יודעים לטפל!</p>
               </div>
             </div>
           </AnimatedContent>
@@ -631,26 +648,26 @@ export default function Home() {
             <div className={styles.linksSection} id="useful-links">
               <h4>קישורים שימושיים:</h4>
               <div className={styles.linksGrid}>
-                <a href="https://www.gov.il/he/pages/sa181225-2" target="_blank" rel="noopener noreferrer" className={styles.linkCard}>
-                  רשות המסים - הודעה רשמית
+                <a href="https://go.idf.il/n0d8d9w4u3" target="_blank" rel="noopener noreferrer" className={styles.linkCard}>
+                  הנפקת אישור נקודות זיכוי - אזור אישי
+                </a>
+                <a href="https://go.idf.il/i1b8z7c5w2" target="_blank" rel="noopener noreferrer" className={styles.linkCard}>
+                  תנאי זכאות ופרטים נוספים - אתר המילואים
+                </a>
+                <a href="https://www.gov.il/BlobFolder/dynamiccollectorresultitem/employers-info161225-1/he/IncomeTax_employers-info161225-1.pdf" target="_blank" rel="noopener noreferrer" className={styles.linkCard}>
+                  טופס לדוגמה וחוזר למעסיקים
+                </a>
+                <a href="https://www.gov.il/he/service/tax-coordination-online" target="_blank" rel="noopener noreferrer" className={styles.linkCard}>
+                  תיאום מס מקוון
                 </a>
                 <a href="https://www.gov.il/BlobFolder/service/itc101/he/Service_Pages_Income_tax_annual-report-2024_itc101.pdf" target="_blank" rel="noopener noreferrer" className={styles.linkCard}>
                   טופס 101 מעודכן
-                </a>
-                <a href="https://greenbook.co.il/content/booking/file60998.pdf" target="_blank" rel="noopener noreferrer" className={styles.linkCard}>
-                  מכתב להצגה למעסיקים
-                </a>
-                <a href="https://www.miluim.idf.il/personalzone/milforms-lobby" target="_blank" rel="noopener noreferrer" className={styles.linkCard}>
-                  הנפקת טופס אישור מילואים מזכה
                 </a>
                 <a href="https://secapp.taxes.gov.il/srsimulatorNZ/#/simulator" target="_blank" rel="noopener noreferrer" className={styles.linkCard}>
                   סימולטור לחישוב נקודות זיכוי (מצב משפחתי)
                 </a>
                 <a href="https://secapp.taxes.gov.il/srsimulatorNZ/#/simulatorMasHachnasah" target="_blank" rel="noopener noreferrer" className={styles.linkCard}>
                   סימולטור לחישוב המס לפי נקודות זיכוי
-                </a>
-                <a href="https://www.gov.il/BlobFolder/guide/specialbenefits/he/pr_נספח אישור סיכום ימי שירות מילואים פעיל מזכה.pdf" target="_blank" rel="noopener noreferrer" className={styles.linkCard}>
-                  טופס אישור סיכום ימי שירות מזכה (לדוגמה)
                 </a>
               </div>
             </div>
@@ -665,7 +682,7 @@ export default function Home() {
               <div className={styles.schemeImageWrapper}>
                 <Image 
                   src="/reservist-credit-scheme.jpg" 
-                  alt="מדרגות נקודות זיכוי למילואימניק לוחם" 
+                  alt="מדרגות נקודות זיכוי למשרתי מילואים לוחמים" 
                   width={800}
                   height={600}
                   className={styles.schemeImage}
@@ -676,14 +693,14 @@ export default function Home() {
             <div className={styles.schemeDetails}>
               <AnimatedContent distance={40} delay={0.15}>
                 <div className={styles.schemeCard}>
-                  <h4>תחולה מ-1.1.2026 ועד ליום 31.12.2027</h4>
-                  <p>במסגרת הטבת המס שתחול החל מינואר 2026 ועד ליום 31.12.2027, על בסיס שירות המילואים בשנת 2025, תינתן הטבת המס בנקודות זיכוי לפי מדרגות:</p>
+                  <h4>שנת 2026 - על בסיס שירות 2025</h4>
+                  <p>הזכאות מחושבת לפי מספר ימי שירות המילואים כלוחם שנעשו בשנת 2025 (צו שגרה או צו 8):</p>
                   <ul>
                     <li><strong>30-39 ימים:</strong> ½ נקודת זיכוי</li>
                     <li><strong>40-49 ימים:</strong> ¾ נקודת זיכוי</li>
-                    <li><strong>50+ ימים:</strong> נקודת זיכוי אחת</li>
+                    <li><strong>50+ ימים:</strong> נקודת זיכוי אחת + ¼ על כל 5 ימים נוספים</li>
                   </ul>
-                  <p>בנוסף, תינתן תוספת של ¼ נקודת זיכוי בעד כל 5 ימים נוספים מעבר ל-50 ימים.</p>
+                  <p>בשנת 2027 יחולו קריטריונים זהים ביחס לימי שמ״פ שבוצעו בשנת 2026.</p>
                 </div>
               </AnimatedContent>
 
@@ -700,7 +717,7 @@ export default function Home() {
 
               <AnimatedContent distance={30} delay={0.25}>
                 <div className={styles.schemeNote}>
-                  <strong>ההטבה מוגבלת לעד 4 נקודות זיכוי בסך הכל, בשתי התקופות.</strong>
+                  <strong>ההטבה מוגבלת לעד 4 נקודות זיכוי בסך הכל. נקודות הזיכוי אינן נצברות משנה לשנה!</strong>
                 </div>
               </AnimatedContent>
             </div>
@@ -812,7 +829,7 @@ export default function Home() {
                       <strong>2024 = 2025:</strong> אין שינוי במדרגות או בשווי נקודת זיכוי
                     </li>
                     <li>
-                      <strong>2026:</strong> תוספת נקודות זיכוי למשרתי מילואים לוחמים (תיקון 283)
+                      <strong>2026:</strong> תוספת נקודות זיכוי למשרתי מילואים לוחמים (החלטת ממשלה 3004)
                     </li>
                   </ul>
                 </div>
